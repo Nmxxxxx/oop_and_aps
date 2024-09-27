@@ -1,56 +1,79 @@
 class Pyramid:
-
-    total_h = 0
-    def __init__(self, max_h, bricks_count=0):
-        self.bricks = max_h
-        self.bricks_count = bricks_count
+    def __init__(self, max_h):
+        self.max_h = max_h
+        self.bricks_count = 0
+        self.total_h = 0
 
     def add_bricks(self, num):
-
-        try:
-            if num <= 5:
-                self.total_h += 1
-            elif num > 5:
-                print("Нельзя добавить более 5 кирпичей! \nПостройка разрушена!")
-        except Exception as e:
-            print("Ошибка:", e)
-        
-        
-        self.bricks_count += num
+        while num > 0:
+            required_bricks = self.max_h - self.total_h
+            
+            if self.total_h < self.max_h:
+                if num >= required_bricks:
+                    num -= required_bricks
+                    self.bricks_count += required_bricks
+                    self.total_h += 1
+                else:
+                    self.bricks_count += num
+                    break  
+            else:
+                break
 
     def get_height(self):
-        print(f"Высота пирамиды: {self.total_h}")
+        return self.total_h  # Возвращаем текущую высоту пирамиды
 
     def is_done(self):
-        self.res = (self.max_h / self.total_h) * 100
-        if self.res == 100:
-            exit(0)
-        return self.res
-    
+        total_bricks = (self.max_h * (self.max_h + 1)) // 2
+        res_bricks = (self.bricks_count / total_bricks) * 100
+        return res_bricks
+
 
 class Builder:
-    def __init__(self, bricks, my_pyramid):
+    def __init__(self, bricks):
         self.bricks = bricks
         self.my_pyramid = Pyramid(15)
 
     def buy_bricks(self):
-        if self.bricks <= 0:
-            bricks += 5
+        self.bricks += 5
+        print(f"Куплено 5 кирпичей. Теперь у строителя {self.bricks} кирпичей.")
 
-    def build_pyramid(self, n ):
+    def build_pyramid(self, n):
         if self.bricks >= n:
             self.bricks -= n
-            self.my_pyramid.add_bricks(n)
+            return n
         else:
             print("Недостаточно кирпичей!")
-            
+            return 0
+
+    def work_day(self):
+        needed_bricks = min(5, self.bricks + 5)  # Пытаемся использовать до 5 кирпичей
+        added_bricks = self.build_pyramid(needed_bricks)
+        
+
+        if added_bricks > 0:
+            self.my_pyramid.add_bricks(added_bricks)
+        
+        print(f"Строили пирамиду: добавлено {added_bricks} кирпичей.")
+        print(f"Остаток кирпичей у строителя: {self.bricks}.")
+        
+
+        readiness = self.my_pyramid.is_done()
+        print(f"Готовность пирамиды: {readiness:.2f}%.")  
+        print(f"Высота пирамиды: {self.my_pyramid.get_height()}.")
+
+        if readiness == 100:  
+            print("Пирамида завершена!")
+            exit(0)
+
+        
+        if added_bricks == 0:
+            self.buy_bricks()
 
 
-        self.my_pyramid.add_bricks(self.bricks)
-        self.my_pyramid.get_height()
+b = Builder(13)
+day = 1
 
-    def work_day(self):   
-        self.build_pyramid(5)
-        self.my_pyramid.is_done()
-        self.buy_bricks()
-    
+while True:
+    print(f"День {day}:")
+    b.work_day()
+    day += 1
