@@ -65,16 +65,17 @@ class Vet:
         print("4. Пристроить щенков в хорошие руки")
 
     
+if __name__ == '__main__':
 
-dog = Dog(puppy_count=5)
+    dog = Dog(puppy_count=5)
 
-vet = Vet("Иванов Иван", dog)
+    vet = Vet("Иванов Иван", dog)
 
-vet.knowledge_base()
-vet.work()
-vet.care()
-dog.give_away_all()
-vet.work()
-vet.care()
+    vet.knowledge_base()
+    vet.work()
+    vet.care()
+    dog.give_away_all()
+    vet.work()
+    vet.care()
 
 

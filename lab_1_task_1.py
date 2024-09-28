@@ -22,12 +22,12 @@ class SchoolDiary:
         print(f"Оценки: {self.grade_list}")
 
 
+if __name__ == '__main__':
+    obj = SchoolDiary("Информатика", "Иванов Иван", [4, 5, 5, 4, 5])
 
-obj = SchoolDiary("Информатика", "Иванов Иван", [4, 5, 5, 4, 5])
+    obj.grade(3)
 
-obj.grade(3)
-
-obj.printer()
-obj.final_grade()
+    obj.printer()
+    obj.final_grade()
     
         
