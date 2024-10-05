@@ -3,10 +3,13 @@ class Pyramid:
         self.max_h = max_h
         self.bricks_count = 0
         self.total_h = 0
+        
+
+        self.bricks_rows = [i for i in range(self.max_h, 0, -1)]
 
     def add_bricks(self, num):
         while num > 0 and self.total_h < self.max_h:
-            required_bricks = self.max_h - self.total_h
+            required_bricks = self.max_h - self.total_h            
 
             
             if self.total_h < self.max_h:
