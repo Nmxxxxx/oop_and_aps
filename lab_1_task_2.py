@@ -3,28 +3,31 @@ class Pyramid:
         self.max_h = max_h
         self.bricks_count = 0
         self.total_h = 0
-        
+        self.bricks_in_current_row = 0
 
         self.bricks_rows = [i for i in range(self.max_h, 0, -1)]
+        self.all_bricks = sum(self.bricks_rows)
+        print(self.all_bricks)
 
     def add_bricks(self, num):
-        while num > 0 and self.total_h < self.max_h:
-            required_bricks = self.max_h - self.total_h            
-
-            
-            if self.total_h < self.max_h:
-                if num >= required_bricks:
-                    num -= required_bricks
-                    self.bricks_count += required_bricks
-                    self.total_h += 1
-                    print('123')
-                    
-                else:
-                    self.bricks_count += num
-                    break  
+        self.bricks_count += num
+        while self.total_h < self.max_h:
+            bricks_in_rows = self.bricks_rows[self.total_h]
+            if self.bricks_in_current_row + num >= bricks_in_rows:
+                num -= (bricks_in_rows - self.bricks_in_current_row)
+                self.bricks_in_current_row = 0
+                self.total_h += 1
             else:
+                self.bricks_in_current_row += num
                 break
-            self.get_height()
+                
+        if num > 0 and self.total_h < self.max_h:
+            self.bricks_in_current_row += num
+            
+        if self.total_h >= self.max_h:
+            print('Пирамида достигла максимальной высоты!')
+        
+            
 
     def get_height(self):
           # Выводим текущую высоту пирамиды
@@ -33,8 +36,7 @@ class Pyramid:
 
 
     def is_done(self):
-        total_bricks = (self.max_h * (self.max_h + 1)) // 2
-        res_bricks = (self.bricks_count / total_bricks) * 100
+        res_bricks = self.bricks_count / self.all_bricks * 100
         return res_bricks
 
 
@@ -74,7 +76,7 @@ class Builder:
         print(f"Готовность пирамиды: {readiness:.2f}%.")  
         
 
-        if readiness == 100:  
+        if readiness >= 100:  
             print("Пирамида завершена!")
             exit(0)
 

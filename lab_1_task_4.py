@@ -1,9 +1,11 @@
+import random
+
 class Supplier:
 
     def __init__(self, name, location):
         self.name = name
         self.location = location
-        self.products = ['PC', 'AK-47', 'NASA DRON']
+        self.products = ['BTC', 'ETH', 'TETHER_USDT']
 
     def add_product(self, product):
         self.products.append(product)
@@ -30,15 +32,16 @@ class VPN:
         self.customers_info = []
 
     def hide(self):
-        return "НЕИЗВЕСТНО"
+        address = ['RUSSIA, MOSCOW', 'FRANCE, PARIS', 'USA, Los Angeles']
+        return random.choice(address)
     def get_location(self):
         print("ДАННЫХ НЕ НАЙДЕНО!")
 
 
 if __name__ == "__main__":
     vpn = VPN()
-    supplier1 = Supplier('Supplier MRX', location=vpn.hide())
-    customer = Customer('Supplier KTX', address='Moscow, Moscow City')
+    supplier1 = Supplier('Supplier ER', location=vpn.hide())
+    customer = Customer('Supplier KTX', address='Moscow, Moscow City, tower 1')
     customer.buy_order(supplier1.products[2])
 
     print(supplier1.get_info())
